@@ -55,17 +55,17 @@
 
 <style>
   :root {
-    --bg: #f0f1f3;
-    --bg-card: #e8eaed;
-    --bg-card-hover: #e1e4e8;
-    --text: #2a2d35;
-    --text-soft: #4a4e58;
-    --text-muted: #5c6069;
-    --accent: #4a6670;
-    --accent-light: #7a9ba6;
-    --accent-dark: #354a52;
-    --line: #c8ccd2;
-    --line-light: #d8dce2;
+    --bg: #ededef;
+    --bg-card: #e0e2e6;
+    --bg-card-hover: #d8dbe0;
+    --text: #18191f;
+    --text-soft: #2e3240;
+    --text-muted: #4a505e;
+    --accent: #3a5560;
+    --accent-light: #6a8b96;
+    --accent-dark: #243840;
+    --line: #b4b9c4;
+    --line-light: #c8cdd6;
     --sidebar-width: 380px;
   }
 
@@ -138,18 +138,28 @@
       border-left: 1px solid var(--line-light);
       z-index: 100;
     }
-    .sidebar-portrait {
-      width: 190px;
-      height: auto;
+    .sidebar-portrait-wrap {
+      width: 168px;
+      height: 210px;
+      border-radius: 50% / 45%;
+      overflow: hidden;
       margin-bottom: 2rem;
       opacity: 0;
       animation: fadeUp 1s ease 0.2s forwards;
-      filter: contrast(1.05);
-      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+      box-shadow: 0 4px 24px rgba(24,25,31,0.12);
     }
-    .sidebar-portrait:hover {
+    .sidebar-portrait-wrap:hover {
       transform: scale(1.04);
-      filter: contrast(1.1);
+      box-shadow: 0 8px 36px rgba(24,25,31,0.18);
+    }
+    .sidebar-portrait {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 12%;
+      filter: contrast(1.08);
+      display: block;
     }
     .sidebar-label {
       font-family: 'DM Sans', sans-serif;
@@ -231,13 +241,23 @@
       text-align: center;
       position: relative;
     }
-    .mobile-hero-portrait {
-      width: 180px;
-      height: auto;
+    .mobile-hero-portrait-wrap {
+      width: 150px;
+      height: 188px;
+      border-radius: 50% / 45%;
+      overflow: hidden;
       margin-bottom: 2rem;
       opacity: 0;
       animation: fadeUp 1s ease 0.2s forwards;
-      filter: contrast(1.05);
+      box-shadow: 0 4px 24px rgba(24,25,31,0.12);
+    }
+    .mobile-hero-portrait {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 12%;
+      filter: contrast(1.08);
+      display: block;
     }
     .mobile-hero-label {
       font-family: 'DM Sans', sans-serif;
@@ -599,12 +619,33 @@
     font-weight: 400;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent-dark);
-    background: rgba(74, 102, 112, 0.1);
     padding: 0.15rem 0.5rem;
     border-radius: 2px;
     align-self: flex-start;
   }
+  /* Genre badge colors — muted tones drawn from the site palette */
+  .badge-Poesía      { color: #1a3a6e; background: rgba(26, 58, 110, 0.11); }
+  .badge-Crónica     { color: #4a3a20; background: rgba(120, 90, 40, 0.13); }
+  .badge-Antología   { color: #2e3d2a; background: rgba(60, 90, 50, 0.12); }
+  .badge-Ensayo      { color: #3d2a3d; background: rgba(90, 55, 90, 0.11); }
+  .badge-Cuento      { color: #3a2828; background: rgba(110, 55, 55, 0.11); }
+  .badge-Compilación { color: #1e3a3a; background: rgba(30, 85, 85, 0.12); }
+
+  /* Filter buttons: active state per genre */
+  .filter-btn[data-filter="Poesía"].active      { background: #1a3a6e; border-color: #1a3a6e; color: #f0f1f3; }
+  .filter-btn[data-filter="Crónica"].active     { background: #7a5a28; border-color: #7a5a28; color: #f0f1f3; }
+  .filter-btn[data-filter="Antología"].active   { background: #3c5a32; border-color: #3c5a32; color: #f0f1f3; }
+  .filter-btn[data-filter="Ensayo"].active      { background: #5a375a; border-color: #5a375a; color: #f0f1f3; }
+  .filter-btn[data-filter="Cuento"].active      { background: #6e3737; border-color: #6e3737; color: #f0f1f3; }
+  .filter-btn[data-filter="Compilación"].active { background: #1e5555; border-color: #1e5555; color: #f0f1f3; }
+
+  /* Subtle genre-tinted left border on cards */
+  .obra-card[data-genre="Poesía"]      { border-left: 3px solid rgba(26, 58, 110, 0.35); }
+  .obra-card[data-genre="Crónica"]     { border-left: 3px solid rgba(120, 90, 40, 0.35); }
+  .obra-card[data-genre="Antología"]   { border-left: 3px solid rgba(60, 90, 50, 0.35); }
+  .obra-card[data-genre="Ensayo"]      { border-left: 3px solid rgba(90, 55, 90, 0.35); }
+  .obra-card[data-genre="Cuento"]      { border-left: 3px solid rgba(110, 55, 55, 0.35); }
+  .obra-card[data-genre="Compilación"] { border-left: 3px solid rgba(30, 85, 85, 0.35); }
 
   .obra-count {
     font-family: 'DM Sans', sans-serif;
@@ -653,8 +694,8 @@
     font-size: 0.52rem;
     font-weight: 300;
     letter-spacing: 0.15em;
-    color: var(--text-muted);
-    opacity: 0.55;
+    color: var(--text-soft);
+    opacity: 0.8;
     text-decoration: none;
     transition: opacity 0.3s ease, color 0.3s ease;
     display: inline-block;
@@ -672,7 +713,9 @@
 
 <!-- ═══ DESKTOP: Fixed sidebar ═══ -->
 <aside class="sidebar">
-  <img src="https://franciscojavierestrada.com/fje.webp" alt="Retrato a lápiz de Francisco Javier Estrada Arriaga" class="sidebar-portrait">
+  <div class="sidebar-portrait-wrap">
+    <img src="https://franciscojavierestrada.com/fje.webp" alt="Retrato a lápiz de Francisco Javier Estrada Arriaga" class="sidebar-portrait">
+  </div>
   <div class="sidebar-label">Poeta · Cronista · Promotor Cultural</div>
   <h1 class="sidebar-name">Francisco Javier<br><em>Estrada Arriaga</em></h1>
   <nav class="sidebar-nav">
@@ -686,7 +729,9 @@
 
 <!-- ═══ MOBILE: Full-screen hero ═══ -->
 <div class="mobile-hero">
-  <img src="https://franciscojavierestrada.com/fje.webp" alt="Retrato a lápiz de Francisco Javier Estrada Arriaga" class="mobile-hero-portrait">
+  <div class="mobile-hero-portrait-wrap">
+    <img src="https://franciscojavierestrada.com/fje.webp" alt="Retrato a lápiz de Francisco Javier Estrada Arriaga" class="mobile-hero-portrait">
+  </div>
   <div class="mobile-hero-label">Poeta · Cronista · Promotor Cultural</div>
   <h1 class="mobile-hero-name">Francisco Javier<br><em>Estrada Arriaga</em></h1>
   <div class="mobile-hero-subtitle">Toluca, Estado de México</div>
@@ -802,147 +847,147 @@
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">2018</div>
           <div class="obra-card-title">Desnudo amor</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">2017</div>
           <div class="obra-card-title">Florilegio enamorado</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
         <div class="obra-card" data-genre="Crónica">
           <div class="obra-card-year">2016</div>
           <div class="obra-card-title">Crónicas de gatos y ciudades</div>
-          <div class="obra-card-badge">Crónica</div>
+          <div class="obra-card-badge badge-Crónica">Crónica</div>
         </div>
         <div class="obra-card" data-genre="Cuento">
           <div class="obra-card-year">2016</div>
           <div class="obra-card-title">El último adiós de Josefa</div>
-          <div class="obra-card-badge">Cuento</div>
+          <div class="obra-card-badge badge-Cuento">Cuento</div>
         </div>
         <div class="obra-card" data-genre="Ensayo">
           <div class="obra-card-year">2016</div>
           <div class="obra-card-title">La pasión amorosa de fray Manuel de Navarrete</div>
-          <div class="obra-card-badge">Ensayo</div>
+          <div class="obra-card-badge badge-Ensayo">Ensayo</div>
         </div>
         <div class="obra-card" data-genre="Compilación">
           <div class="obra-card-year">2015</div>
           <div class="obra-card-title">Poemas para el brindis</div>
-          <div class="obra-card-badge">Compilación</div>
+          <div class="obra-card-badge badge-Compilación">Compilación</div>
         </div>
         <div class="obra-card" data-genre="Antología">
           <div class="obra-card-year">2014</div>
           <div class="obra-card-title">Antología general de poesía mexiquense</div>
-          <div class="obra-card-badge">Antología</div>
+          <div class="obra-card-badge badge-Antología">Antología</div>
         </div>
         <div class="obra-card" data-genre="Antología">
           <div class="obra-card-year">2014</div>
           <div class="obra-card-title">Del Estado de México su poesía</div>
-          <div class="obra-card-badge">Antología</div>
+          <div class="obra-card-badge badge-Antología">Antología</div>
         </div>
         <div class="obra-card" data-genre="Antología">
           <div class="obra-card-year">2014</div>
           <div class="obra-card-title">El águila y la cruz. Antología de poesía cristiana escrita en México</div>
-          <div class="obra-card-badge">Antología</div>
+          <div class="obra-card-badge badge-Antología">Antología</div>
         </div>
         <div class="obra-card" data-genre="Crónica">
           <div class="obra-card-year">2013</div>
           <div class="obra-card-title">Breviario sentimental de Toluca</div>
-          <div class="obra-card-badge">Crónica</div>
+          <div class="obra-card-badge badge-Crónica">Crónica</div>
         </div>
         <div class="obra-card" data-genre="Crónica">
           <div class="obra-card-year">2013</div>
           <div class="obra-card-title">Toluca, crónica de una ciudad</div>
-          <div class="obra-card-badge">Crónica</div>
+          <div class="obra-card-badge badge-Crónica">Crónica</div>
         </div>
         <div class="obra-card" data-genre="Antología">
           <div class="obra-card-year">2012</div>
           <div class="obra-card-title">Con la voz del volcán. Antología de poesía amorosa mexiquense</div>
-          <div class="obra-card-badge">Antología</div>
+          <div class="obra-card-badge badge-Antología">Antología</div>
         </div>
         <div class="obra-card" data-genre="Crónica">
           <div class="obra-card-year">2012</div>
           <div class="obra-card-title">Toluca, la bella</div>
-          <div class="obra-card-badge">Crónica</div>
+          <div class="obra-card-badge badge-Crónica">Crónica</div>
         </div>
         <div class="obra-card" data-genre="Antología">
           <div class="obra-card-year">2011</div>
           <div class="obra-card-title">Antología de poesía iberoamericana. Casas del Poeta</div>
-          <div class="obra-card-badge">Antología</div>
+          <div class="obra-card-badge badge-Antología">Antología</div>
         </div>
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">2011</div>
           <div class="obra-card-title">Heréticas</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
         <div class="obra-card" data-genre="Ensayo">
           <div class="obra-card-year">2010</div>
           <div class="obra-card-title">Así se escribe un poema</div>
-          <div class="obra-card-badge">Ensayo</div>
+          <div class="obra-card-badge badge-Ensayo">Ensayo</div>
         </div>
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">2008</div>
           <div class="obra-card-title">Del amor de los amantes</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">2008</div>
           <div class="obra-card-title">Sombras en los ojos</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
         <div class="obra-card" data-genre="Antología">
           <div class="obra-card-year">2007</div>
           <div class="obra-card-title">Poesía mexiquense del siglo XX</div>
-          <div class="obra-card-badge">Antología</div>
+          <div class="obra-card-badge badge-Antología">Antología</div>
         </div>
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">2006</div>
           <div class="obra-card-title">Sexus</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
         <div class="obra-card" data-genre="Antología">
           <div class="obra-card-year">2006</div>
           <div class="obra-card-title">La poesía del Estado de México</div>
-          <div class="obra-card-badge">Antología</div>
+          <div class="obra-card-badge badge-Antología">Antología</div>
         </div>
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">2005</div>
           <div class="obra-card-title">Compañera del alba</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
         <div class="obra-card" data-genre="Antología">
           <div class="obra-card-year">2003</div>
           <div class="obra-card-title">Encuentro Nacional de Poetas. Antología</div>
-          <div class="obra-card-badge">Antología</div>
+          <div class="obra-card-badge badge-Antología">Antología</div>
         </div>
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">2003</div>
           <div class="obra-card-title">Sonetos</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">2002</div>
           <div class="obra-card-title">Fulgores del crepúsculo</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">2001</div>
           <div class="obra-card-title">El parto de las nubes</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">2000</div>
           <div class="obra-card-title">Crepúsculos</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
         <div class="obra-card" data-genre="Antología">
           <div class="obra-card-year">1999</div>
           <div class="obra-card-title">Poesía amorosa del Estado de México</div>
-          <div class="obra-card-badge">Antología</div>
+          <div class="obra-card-badge badge-Antología">Antología</div>
         </div>
         <div class="obra-card" data-genre="Poesía">
           <div class="obra-card-year">1997</div>
           <div class="obra-card-title">La mesura de las cosas</div>
-          <div class="obra-card-badge">Poesía</div>
+          <div class="obra-card-badge badge-Poesía">Poesía</div>
         </div>
 
       </div>
@@ -954,7 +999,7 @@
 </div>
 
 <footer>
-  <a href="https://fguadarrama.com/about" target="_blank" rel="noopener noreferrer" class="footer-credit">Desarrollado por Francisco Guadarrama</a>
+  <a href="https://fguadarrama.com/about" rel="noopener noreferrer" class="footer-credit">Desarrollado por Francisco Guadarrama</a>
 </footer>
 
 <script>
