@@ -211,18 +211,6 @@
     color: var(--text-muted);
     margin-bottom: 2rem;
   }
-  .email-display {
-    display: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    margin-top: 1.2rem;
-  }
-  .email-display a {
-    color: var(--accent-light);
-    text-decoration: none;
-  }
-  .email-display a:hover { text-decoration: underline; }
   /* CSS bait spans — visually invisible, confuse raw-HTML scrapers */
   .e-hide {
     display: none;
@@ -1172,12 +1160,7 @@
     </div>
     <span>Escribir un mensaje</span>
   </button>
-  <!-- Hidden until JS reveals it. CSS decoy spans confuse raw-HTML scrapers. -->
-  <div class="email-display" id="emailDisplay" style="display:none;">
-    <span class="e-hide">zz9fake&#64;nowhere.xx</span>
-    <span id="emailLink"></span>
-    <span class="e-hide">bot&#64;trap.invalid</span>
-  </div>
+  <!-- Email is never rendered in the DOM. JS opens mail client directly on click. -->
 </section>
 
 <footer>
@@ -1236,22 +1219,12 @@ filterBtns.forEach(btn => {
 });
 
 // ── Contact: JS email assembly ──
-// The address is never written whole in the source.
-// It is built from parts only when the user clicks the button.
+// Address is split into parts and assembled only in memory at click time.
+// It is NEVER written to the DOM.
 const btn = document.getElementById('revealEmailBtn');
-const emailDisplay = document.getElementById('emailDisplay');
-const emailLink = document.getElementById('emailLink');
-
 btn.addEventListener('click', () => {
-  // JS LAYER: assemble from parts — bots that don't execute JS never see this
-  const parts = ['nexus', 'estrada', '@', 'hotmail', '.com'];
-  const address = parts.join('');
-  // Inject the real link
-  emailLink.innerHTML = '<a href="mailto:' + address + '">' + address + '</a>';
-  // Show the display div
-  emailDisplay.style.display = 'block';
-  // Open mail client directly
-  window.location.href = 'mailto:' + address;
+  const a = ['nexus', 'estrada', '@', 'hotmail', '.com'].join('');
+  window.location.href = 'mailto:' + a;
 });
 </script>
 </body>
