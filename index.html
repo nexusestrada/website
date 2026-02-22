@@ -115,6 +115,8 @@
 }
 </script>
 
+<link rel="canonical" href="https://www.franciscojavierestrada.com">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
@@ -186,6 +188,86 @@
     0% { box-shadow: 0 0 0 0 rgba(74,102,112,0.25); }
     70% { box-shadow: 0 0 0 8px rgba(74,102,112,0); }
     100% { box-shadow: 0 0 0 0 rgba(74,102,112,0); }
+  }
+
+  /* ═══ CONTACT SECTION ═══ */
+  .contact-section {
+    padding: 3.5rem 2rem 2.5rem;
+    text-align: center;
+    border-top: 1px solid var(--line-light);
+    margin-top: 2rem;
+  }
+  .contact-section h2 {
+    font-family: 'Cormorant', Georgia, serif;
+    font-size: 1.9rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.01em;
+  }
+  .contact-section p {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+  }
+  .email-display {
+    display: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-top: 1.2rem;
+  }
+  .email-display a {
+    color: var(--accent-light);
+    text-decoration: none;
+  }
+  .email-display a:hover { text-decoration: underline; }
+  /* CSS bait spans — visually invisible, confuse raw-HTML scrapers */
+  .e-hide {
+    display: none;
+    visibility: hidden;
+    font-size: 0;
+    color: transparent;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  /* ═══ SEND BUTTON (adapted from uiverse.io / adamgiebl) ═══ */
+  .contact-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    background: var(--accent);
+    color: #f0f1f3;
+    padding: 0.7em 1.2em 0.7em 1em;
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+    transition: background 0.2s, transform 0.15s;
+    cursor: pointer;
+    letter-spacing: 0.02em;
+  }
+  .contact-btn:hover { background: var(--accent-dark); }
+  .contact-btn span {
+    display: block;
+    margin-left: 0.35em;
+    transition: transform 0.3s ease-in-out;
+  }
+  .contact-btn svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+    flex-shrink: 0;
+  }
+  .contact-btn:hover .svg-wrapper { animation: fly-1 0.6s ease-in-out infinite alternate; }
+  .contact-btn:hover svg { transform: translateX(1.2em) rotate(45deg) scale(1.1); }
+  .contact-btn:hover span { transform: translateX(5em); }
+  .contact-btn:active { transform: scale(0.95); }
+  @keyframes fly-1 {
+    from { transform: translateY(0.1em); }
+    to   { transform: translateY(-0.1em); }
   }
 
   /* ═══ DESKTOP ═══ */
@@ -1065,6 +1147,26 @@
   </div>
 </div>
 
+<section class="contact-section reveal">
+  <h2>Contacto</h2>
+  <p>Para correspondencia, colaboraciones o eventos.</p>
+  <button class="contact-btn" id="revealEmailBtn" aria-label="Enviar correo electrónico">
+    <div class="svg-wrapper">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </div>
+    <span>Escribir un mensaje</span>
+  </button>
+  <!-- Hidden until JS reveals it. CSS decoy spans confuse raw-HTML scrapers. -->
+  <div class="email-display" id="emailDisplay">
+    <span class="e-hide">zz9fake&#64;nowhere.xx</span>
+    <span id="emailLink"></span>
+    <span class="e-hide">bot&#64;trap.invalid</span>
+  </div>
+</section>
+
 <footer>
   <a href="https://fguadarrama.com/about" rel="noopener noreferrer" class="footer-credit">Desarrollado por Francisco Guadarrama</a>
 </footer>
@@ -1118,6 +1220,25 @@ filterBtns.forEach(btn => {
 
     countEl.textContent = visible;
   });
+});
+
+// ── Contact: JS email assembly ──
+// The address is never written whole in the source.
+// It is built from parts only when the user clicks the button.
+const btn = document.getElementById('revealEmailBtn');
+const emailDisplay = document.getElementById('emailDisplay');
+const emailLink = document.getElementById('emailLink');
+
+btn.addEventListener('click', () => {
+  // JS LAYER: assemble from parts — bots that don't execute JS never see this
+  const parts = ['nexus', 'estrada', '@', 'hotmail', '.com'];
+  const address = parts.join('');
+  // Inject the real link
+  emailLink.innerHTML = '<a href="mailto:' + address + '">' + address + '</a>';
+  // Show the display div
+  emailDisplay.style.display = 'block';
+  // Open mail client directly
+  window.location.href = 'mailto:' + address;
 });
 </script>
 </body>
