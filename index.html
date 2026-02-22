@@ -211,7 +211,6 @@
     color: var(--text-muted);
     margin-bottom: 2rem;
   }
-  /* CSS bait spans — visually invisible, confuse raw-HTML scrapers */
   .e-hide {
     display: none;
     visibility: hidden;
@@ -1160,7 +1159,6 @@
     </div>
     <span>Escribir un mensaje</span>
   </button>
-  <!-- Email is never rendered in the DOM. JS opens mail client directly on click. -->
 </section>
 
 <footer>
@@ -1218,13 +1216,10 @@ filterBtns.forEach(btn => {
   });
 });
 
-// ── Contact: JS email assembly ──
-// Address is split into parts and assembled only in memory at click time.
-// It is NEVER written to the DOM.
 const btn = document.getElementById('revealEmailBtn');
 btn.addEventListener('click', () => {
-  const a = ['nexus', 'estrada', '@', 'hotmail', '.com'].join('');
-  window.location.href = 'mailto:' + a;
+  const r = [109,111,99,46,108,105,97,109,116,111,104,64,97,100,97,114,116,115,101,115,117,120,101,110];
+  window.location.href = 'mailto:' + r.reverse().map(c => String.fromCharCode(c)).join('');
 });
 </script>
 </body>
